@@ -120,10 +120,10 @@ def update_location(icao, p_range, u_money, g_id):
 
 # game starts
 # ask to show the story
-storyDialog = input('Do you want to read the background story? (Y/N): ')
-if storyDialog == 'Y':
+exstoryDialog = input('Do you want to read the background story? (Y/N): ')
+if exstoryDialog == 'Y':
     # print wrapped string line by line
-    for line in story.getStory():
+    for line in exstory.getexstory():
         print(line)
 
 # GAME SETTINGS
