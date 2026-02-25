@@ -9,10 +9,10 @@ conn = mysql.connector.connect(
     autocommit=True
 )
 
-def get_user_location(id):
+def get_user_location(user_id):
     cursor = conn.cursor(dictionary=True)
 
-    sql = f"SELECT location FROM user_info where id = {id}"
+    sql = f"SELECT location FROM user_info where id = {user_id}"
     cursor.execute(sql)
     result = cursor.fetchone()
 
