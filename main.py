@@ -61,21 +61,23 @@ funktiossa voi kuitenkin tarvita muuta, kuten sijainnin koordinaatit, silloin fl
 -> Pääohjelmassa annetaan pelaajan nykysijainti, sekä kohdemaa parametrinä tähän tyyliin:
 demoFunction(auth.location, targetCountry)
 
--> Kokeiluvaiheessa voidaan kovakoodata parametrit funktion sisällä näin:
+-> Kokeiluvaiheessa voidaan kutsua sitä kovakoodatuilla parametreillä funktion sisällä näin:
 
 # importti tietokannan kyselylle koska sitä tarvitaan tässä
-import queryDb from queryDb
+from queryDb import queryDb
 
-def demoFunction(currentLocation, targetCountry)
-    
-    # KOVAKOOdAUKSET TESTIÄ VARTEN
-    currentLocation = "EFHK"
-    targetCountry = "ABCD"
-    
-    # Kyselyt tietokantaan (Varmaan väärin mutta tähän tyyliin kuitenkin)
-    currentLocationXY = queryDb(f"SELECT longitude, latitude FROM airports WHERE ident = '{currentLocation}')
-    targetCountryXY = queryDb(f"SELECT longitude, latitude FROM airports WHERE ident = '{targetCountry}')
-    
-    ... käsittely jatkuu 
+def demoFunction(currentLocation, targetCountry):
+
+    # Kyselyt tietokantaan
+    currentLocationXY = queryDb(f"SELECT longitude_deg, latitude_deg FROM airport WHERE ident = '{currentLocation}'")
+    targetCountryXY = queryDb(f"SELECT longitude_deg, latitude_deg FROM airport WHERE ident = '{targetCountry}'")
+
+    print(currentLocationXY)
+    print(targetCountryXY)
+
+# KOKEILEMISEKSI KUTSU FUNKTIOTA SAMASSA TIEDOSTOSSA KIINTEILLÄ PARAMETREILLÄ:
+demoFunction("EFHK", "EFPE")
+
+# Sen jälkeen valitse pycharm oikealta ylhäältä main -> Current File ja suorita scripti  
 
 """
