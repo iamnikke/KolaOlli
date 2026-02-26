@@ -1,1 +1,5 @@
-moi öäivitys tpimen
+import tarkistutesti
+
+importattuViesti = tarkistutesti.muuttuja
+
+print(importattuViesti)
