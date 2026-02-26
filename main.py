@@ -1,6 +1,8 @@
-from gameInit import auth
+from calculate_distance import calculate_distance
+from calculate_fly_cost import calculate_fly_cost
+from move_player import move_player
 from reduceMoney import reduceMoney
-
+from gameInit import auth
 
 #
 # Pääohjelma
@@ -45,13 +47,29 @@ playerStatsHud = f"""
 """
 print(playerStatsHud)
 
-# Funktion testaus
-if reduceMoney(playerData,20):
-    print("Rahat riitti")
-    print("Uusi saldo", playerData.money)
-else:
-    print("Rahat ei riittänyt")
-    print(playerData.money)
+while True:
+    targetCountry = input("Syötä maan tunnus: ")
+
+    if targetCountry != "":
+        dist = calculate_distance(playerData.location, targetCountry)
+        price = float(f"{calculate_fly_cost(dist):.2f}")
+
+        print(f"Lentäminen {targetCountry} maksaa: {price}")
+        print(f"Matkaa on {dist:.2f} kilometriä.")
+        print("====================================")
+        confirm = input("Kirjoita lessgo matkustaaksesi: ")
+
+        if confirm == "lessgo":
+            if reduceMoney(playerData, price):
+                print("Tervetuloa maahan.")
+                print("Rahaa jäljellä", playerData.money)
+                move_player(targetCountry, dist, playerData.money, playerData)
+                print(playerStatsHud)
+
+            else:
+                print("Sinut käännytettiin kassalla kotiin. Rahat eivät riittäneet.")
+                print("Kokeile lentää lähemmäs. Sinulla on vain", playerData.money)
+
 
 
 """

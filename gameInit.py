@@ -27,8 +27,8 @@ def auth(username):
     # Uuden pelaajan oletusasetukset
     defaultId = random.randint(1,999) # TILAPÄINEN RATKAISU ID:LLE, KORVATAAN AUTO INCREMENT
     defaultUsername = "Matti Oletus"
-    defaultBalance = 0
-    defaultCocaCola = 0
+    defaultBalance = 1000
+    defaultCocaCola = 100
     defaultXp = 0
     defaultTotalTravelKm = 0
     defaultCo2Consumed = 0

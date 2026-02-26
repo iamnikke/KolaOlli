@@ -1,4 +1,5 @@
 from queryDb import queryDb
+from decimal import Decimal
 
 def reduceMoney(playerData, priceAmount):
 
@@ -7,6 +8,8 @@ def reduceMoney(playerData, priceAmount):
 
     ## [0][0] = ensimmäinen rivi, ensimmäinen sarake
     moneyBalance = queryDb(f"SELECT money FROM user_info WHERE id = '{playerId}'")[0][0]
+
+    priceAmount = Decimal(str(priceAmount))
 
     if moneyBalance < priceAmount:
         # debug
