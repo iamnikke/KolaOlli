@@ -9,11 +9,9 @@ def calculate_distance(currentLocation, targetCountry):
 
     # laskee lentokenttien etäisyyden
     dist = distance.distance(currentLocationXY, targetCountryXY)
-    print (f"Etäisyys: {dist.km:.2f} km")
+    #print (f"Etäisyys: {dist.km:.2f} km")
     return dist.km
 
-dista = calculate_distance('agar','efhk')
-calculate_fly_cost(dista)
 
 
 
