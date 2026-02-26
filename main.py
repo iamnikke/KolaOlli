@@ -1,5 +1,5 @@
 from gameInit import auth
-
+from reduceMoney import reduceMoney
 
 
 #
@@ -27,23 +27,31 @@ print(r"""
 username = input("Anna pelaajan nimimerkki: ")
 print("===================")
 
+# Pelin alustus ja olioluokan luonti.
+playerData = auth(username)
 
-auth = auth(username)
-
-userData = f"""
-        ID: {auth.id}
-        Käyttäjänimi: {auth.username}
-        Massit: {auth.money}
-        Colat: {auth.coca_cola}
-        XP: {auth.xp}
-        Kokonaismatkustelu km: {auth.total_travel_km}
-        Päästöt: {auth.co2_consumed}
-        Nykyinen sijainti: {auth.location}
-        Kellonaika: {auth.clock}
-        Lahjukset: {auth.bribes}
+# Tulosta pelaajan statsit
+playerStatsHud = f"""
+        ID: {playerData.id}
+        Käyttäjänimi: {playerData.username}
+        Massit: {playerData.money}
+        Colat: {playerData.coca_cola}
+        XP: {playerData.xp}
+        Kokonaismatkustelu km: {playerData.total_travel_km}
+        Päästöt: {playerData.co2_consumed}
+        Nykyinen sijainti: {playerData.location}
+        Kellonaika: {playerData.clock}
+        Lahjukset: {playerData.bribes}
 """
+print(playerStatsHud)
 
-print(userData)
+# Funktion testaus
+if reduceMoney(playerData,20):
+    print("Rahat riitti")
+    print("Uusi saldo", playerData.money)
+else:
+    print("Rahat ei riittänyt")
+    print(playerData.money)
 
 
 """
