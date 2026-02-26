@@ -1,6 +1,7 @@
 import random
 
 from queryDb import queryDb
+from instructions import printInstructions
 
 class User:
     def __init__(self, id, username, money, coca_cola, xp, total_travel_km, co2_consumed, location, clock, bribes):
@@ -32,7 +33,7 @@ def auth(username):
     defaultBribes = 0
 
     # Siirretään createUser tänne, jotta se näkee oletusarvot
-    def createUser(new_username):
+    def createUser(newUsername):
         queryDb(f"""
         INSERT INTO user_info (
             id,
@@ -47,7 +48,7 @@ def auth(username):
             bribes
         ) VALUES (
             {defaultId},
-            '{new_username}', 
+            '{newUsername}', 
             {defaultBalance}, 
             {defaultCocaCola}, 
             {defaultXp},
@@ -81,14 +82,13 @@ def auth(username):
             bribes=validateUserResult[9]
         )
 
-        print("DEBUG: gameInit = Käyttäjä löytyi -> Olio-luokan luonti onnistui. Palautetaan pääohjelmaan")
+        #print("DEBUG: gameInit = Käyttäjä löytyi -> Olio-luokan luonti onnistui. Palautetaan pääohjelmaan")
         return user
 
     # Käyttäjää ei löydy
     else:
 
-        print("\nKäyttäjää ei löydy. Tehdään sinulle uusi!")
-        username = input("Syötä käyttäjänimi: ").strip()
+        print("Luodaan uusi pelaaja...")
 
         if username == "":
             username = defaultUsername
@@ -111,5 +111,6 @@ def auth(username):
                 clock=validateUserResult[8],
                 bribes=validateUserResult[9]
             )
-            print("Onnistui")
+            print("Tervetuloa!")
+            printInstructions()
             return user

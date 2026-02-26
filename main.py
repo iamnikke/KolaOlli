@@ -8,13 +8,26 @@ from gameInit import auth
 #
 
 # Alkutekstit
-print("===================")
-print("")
-print("Tervetuloa")
-print("Kirjaudu sisään")
+## r-string estää tulkitsemasta erikoismerkkejä
+print(r"""
+      ////^\\\\
+      | ^   ^ |
+     @ (o) (o) @
+      |   <   |
+      |  ___  |
+       \_____/
+     ____|  |____
+========================
+ _  __     _        ___  _ _ _ 
+| |/ /___ | | __ _ / _ \| | (_)
+| ' // _ \| |/ _` | | | | | | |
+| . \ (_) | | (_| | |_| | | | |
+|_|\_\___/|_|\__,_|\___/|_|_|_|
+""")
+username = input("Anna pelaajan nimimerkki: ")
 print("===================")
 
-username = input("Käyttäjänimi")
+
 auth = auth(username)
 
 userData = f"""
@@ -32,4 +45,37 @@ userData = f"""
 
 print(userData)
 
-riitaako(auth.id)
+
+"""
+
+TESTIT TMS TÄN AlAPUOLELLE
+ÄLÄ PUSHAA MITÄÄN PÄÄOHJELMAAN
+
+
+YLEISPÄTEVÄ OHJE:
+jos haluat kokeilla funktiota oikeilla parametreillä, voit käyttää ylläolevan olioluokkaa
+datan saamiseksi.
+
+funktiossa voi kuitenkin tarvita muuta, kuten sijainnin koordinaatit, silloin flow ja demo menisi näin:
+
+-> Pääohjelmassa annetaan pelaajan nykysijainti, sekä kohdemaa parametrinä tähän tyyliin:
+demoFunction(auth.location, targetCountry)
+
+-> Kokeiluvaiheessa voidaan kovakoodata parametrit funktion sisällä näin:
+
+# importti tietokannan kyselylle koska sitä tarvitaan tässä
+import queryDb from queryDb
+
+def demoFunction(currentLocation, targetCountry)
+    
+    # KOVAKOOdAUKSET TESTIÄ VARTEN
+    currentLocation = "EFHK"
+    targetCountry = "ABCD"
+    
+    # Kyselyt tietokantaan (Varmaan väärin mutta tähän tyyliin kuitenkin)
+    currentLocationXY = queryDb(f"SELECT longitude, latitude FROM airports WHERE ident = '{currentLocation}')
+    targetCountryXY = queryDb(f"SELECT longitude, latitude FROM airports WHERE ident = '{targetCountry}')
+    
+    ... käsittely jatkuu
+
+"""
