@@ -4,7 +4,7 @@ from queryDb import queryDb
 from instructions import printInstructions
 
 class User:
-    def __init__(self, id, username, money, coca_cola, xp, total_travel_km, co2_consumed, location, clock, bribes):
+    def __init__(self, id, username, money, coca_cola, xp, total_travel_km, co2_consumed, location, clock, bribes, bribes_succeeded, caught, sales):
         self.id = id
         self.username = username
         self.money = money
@@ -15,6 +15,10 @@ class User:
         self.location = location
         self.clock = clock
         self.bribes = bribes
+        self.bribes_succeeded = bribes_succeeded
+        self.caught = caught
+        self.sales = sales
+
 
 
 # Autentikointi funktio, käyttäjän syöttämä nimimerkki parametrinä
@@ -31,6 +35,9 @@ def auth(username):
     defaultLocation = 'EFHK'
     defaultClock = '16:00:00'
     defaultBribes = 0
+    defaultBribes_succeeded = 0
+    defaultCaught = 0
+    defaultsales = 0
 
     # Siirretään createUser tänne, jotta se näkee oletusarvot
     def createUser(newUsername):
@@ -45,7 +52,10 @@ def auth(username):
             co2_consumed, 
             location, 
             clock, 
-            bribes
+            bribes,
+            bribes_succeeded,
+            caught,
+            sales
         ) VALUES (
             {defaultId},
             '{newUsername}', 
@@ -56,7 +66,10 @@ def auth(username):
             {defaultCo2Consumed},
             '{defaultLocation}', 
             '{defaultClock}', 
-            {defaultBribes}
+            {defaultBribes},
+            {defaultBribes_succeeded},
+            {defaultCaught},
+            {defaultsales}
         )
         """)
 
@@ -79,7 +92,10 @@ def auth(username):
             co2_consumed=validateUserResult[6],
             location=validateUserResult[7],
             clock=validateUserResult[8],
-            bribes=validateUserResult[9]
+            bribes=validateUserResult[9],
+            bribes_succeeded=validateUserResult[10],
+            caught=validateUserResult[11],
+            sales=validateUserResult[12]
         )
 
         #print("DEBUG: gameInit = Käyttäjä löytyi -> Olio-luokan luonti onnistui. Palautetaan pääohjelmaan")
@@ -109,7 +125,10 @@ def auth(username):
                 co2_consumed=validateUserResult[6],
                 location=validateUserResult[7],
                 clock=validateUserResult[8],
-                bribes=validateUserResult[9]
+                bribes=validateUserResult[9],
+                bribes_succeeded=validateUserResult[10],
+                caught=validateUserResult[11],
+                sales=validateUserResult[12]
             )
             print("Tervetuloa!")
             printInstructions()
