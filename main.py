@@ -40,7 +40,7 @@ playerStatsHud = f"""
         Colat: {playerData.coca_cola}
         XP: {playerData.xp}
         Kokonaismatkustelu km: {playerData.total_travel_km}
-        Päästöt: {playerData.co2_consumed}
+        Päästöt: {playerData.total_co2_consumed}
         Nykyinen sijainti: {playerData.location}
         Kellonaika: {playerData.clock}
         Lahjukset: {playerData.bribes}

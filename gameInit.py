@@ -4,14 +4,14 @@ from queryDb import queryDb
 from instructions import printInstructions
 
 class User:
-    def __init__(self, id, username, money, coca_cola, xp, total_travel_km, co2_consumed, location, clock, bribes, bribes_succeeded, caught, sales):
+    def __init__(self, id, username, money, coca_cola, xp, total_travel_km, total_co2_consumed, location, clock, bribes, bribes_succeeded, caught, sales):
         self.id = id
         self.username = username
         self.money = money
         self.coca_cola = coca_cola
         self.xp = xp
         self.total_travel_km = total_travel_km
-        self.co2_consumed = co2_consumed
+        self.total_co2_consumed = total_co2_consumed
         self.location = location
         self.clock = clock
         self.bribes = bribes
@@ -31,7 +31,7 @@ def auth(username):
     defaultCocaCola = 100
     defaultXp = 0
     defaultTotalTravelKm = 0
-    defaultCo2Consumed = 0
+    defaultTotalCo2Consumed = 0
     defaultLocation = 'EFHK'
     defaultClock = '16:00:00'
     defaultBribes = 0
@@ -49,7 +49,7 @@ def auth(username):
             coca_cola, 
             xp, 
             total_travel_km,
-            co2_consumed, 
+            total_co2_consumed, 
             location, 
             clock, 
             bribes,
@@ -63,7 +63,7 @@ def auth(username):
             {defaultCocaCola}, 
             {defaultXp},
             {defaultTotalTravelKm}, 
-            {defaultCo2Consumed},
+            {defaultTotalCo2Consumed},
             '{defaultLocation}', 
             '{defaultClock}', 
             {defaultBribes},
@@ -89,7 +89,7 @@ def auth(username):
             coca_cola=validateUserResult[3],
             xp=validateUserResult[4],
             total_travel_km=validateUserResult[5],
-            co2_consumed=validateUserResult[6],
+            total_co2_consumed=validateUserResult[6],
             location=validateUserResult[7],
             clock=validateUserResult[8],
             bribes=validateUserResult[9],
@@ -122,7 +122,7 @@ def auth(username):
                 coca_cola=validateUserResult[3],
                 xp=validateUserResult[4],
                 total_travel_km=validateUserResult[5],
-                co2_consumed=validateUserResult[6],
+                total_co2_consumed=validateUserResult[6],
                 location=validateUserResult[7],
                 clock=validateUserResult[8],
                 bribes=validateUserResult[9],

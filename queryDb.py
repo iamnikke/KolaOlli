@@ -5,9 +5,9 @@ def queryDb(query):
     mysql_connection = mysql.connector.connect(
         host="127.0.0.1",
         port="3306",
-        user="admin",
-        password="admin",
-        database="kolaolli",
+        user="root",
+        password="Aaro22",
+        database="cola_game",
         autocommit=True
     )
     cursor = mysql_connection.cursor()
