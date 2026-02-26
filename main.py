@@ -76,6 +76,6 @@ def demoFunction(currentLocation, targetCountry)
     currentLocationXY = queryDb(f"SELECT longitude, latitude FROM airports WHERE ident = '{currentLocation}')
     targetCountryXY = queryDb(f"SELECT longitude, latitude FROM airports WHERE ident = '{targetCountry}')
     
-    ... käsittely jatkuu
+    ... käsittely jatkuu 
 
 """
