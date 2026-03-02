@@ -5,6 +5,7 @@ from reduceMoney import reduceMoney
 from gameInit import *
 from get_caught import get_caught
 from calculate_fines import calculate_fines
+from pick_transportation_method import init_vehicles, Airplane
 
 #
 # Pääohjelma
@@ -40,6 +41,24 @@ printUserStats(playerData.username)
 while True:
     targetCountry = input("Syötä maan tunnus: ")
 
+    vehicles = init_vehicles()
+
+    print("\nValitse lentokoneesi:")
+    for i, v in enumerate(vehicles):
+        print(f"{i + 1}. {v.name} (Nopeus: {v.speed} km/h, Kapasiteetti: {v.capacity} tölkkiä)")
+
+    try:
+        pick_airplane = int(input("\nValitse lentokone (1, 2, 3): ")) - 1
+        if 0 <= pick_airplane < len(vehicles):
+            selected_vehicle = vehicles[pick_airplane]
+            print(f"Valitsit: {selected_vehicle.name}")
+        else:
+            print("Virhe! Lentokonetta ei ole olemassa.")
+            continue  # menee takaisin main looppiin
+    except ValueError:
+        print("Anna numero.")
+        continue
+
     if targetCountry != "":
         dist = calculate_distance(playerData.location, targetCountry)
         price = float(f"{calculate_fly_cost(dist):.2f}")
@@ -54,8 +73,9 @@ while True:
                 print("Tervetuloa maahan.")
                 print("Rahaa jäljellä", playerData.money)
                 move_player(targetCountry, dist, playerData.money, playerData)
+                capacity = selected_vehicle.capacity
                 if get_caught():
-                    fines = calculate_fines(100, 110)
+                    fines = calculate_fines(capacity, 110)
                     print(f"Jäit kiinni ylilastin kanssa, joudut maksamaan sakon: {fines} euroa")
                     if reduceMoney(playerData, fines):
                         print("Rahaa jäljellä", playerData.money)
