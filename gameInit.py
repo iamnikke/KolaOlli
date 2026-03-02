@@ -129,3 +129,50 @@ def auth(username):
             print("Tervetuloa!")
             printInstructions()
             return user
+
+
+def fetchUserdata(username):
+    validateUser = queryDb(f"SELECT * FROM user_info WHERE username = '{username}'")
+
+    # Jos query palauttaa tuloksen, käyttäjä löytyy tietokannasta
+    if validateUser:
+        # Käsitellään vain ensimmäistä riviä
+        validateUserResult = validateUser[0]
+
+        user = User(
+            id=validateUserResult[0],
+            username=validateUserResult[1],
+            money=validateUserResult[2],
+            coca_cola=validateUserResult[3],
+            xp=validateUserResult[4],
+            total_travel_km=validateUserResult[5],
+            total_co2_consumed=validateUserResult[6],
+            location=validateUserResult[7],
+            clock=validateUserResult[8],
+            bribes=validateUserResult[9],
+            bribes_succeeded=validateUserResult[10],
+            caught=validateUserResult[11],
+            sales=validateUserResult[12]
+        )
+
+        # print("DEBUG: gameInit = Käyttäjä löytyi -> Olio-luokan luonti onnistui. Palautetaan pääohjelmaan")
+        return user
+
+def printUserStats(username):
+
+    playerData = fetchUserdata(username)
+
+    # Tulosta pelaajan statsit
+    playerStatsHud = f"""
+            ID: {playerData.id}
+            Käyttäjänimi: {playerData.username}
+            Massit: {playerData.money}
+            Colat: {playerData.coca_cola}
+            XP: {playerData.xp}
+            Kokonaismatkustelu km: {playerData.total_travel_km}
+            Päästöt: {playerData.total_co2_consumed}
+            Nykyinen sijainti: {playerData.location}
+            Kellonaika: {playerData.clock}
+            Lahjukset: {playerData.bribes}
+    """
+    print(playerStatsHud)

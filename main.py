@@ -2,7 +2,7 @@ from calculate_distance import calculate_distance
 from calculate_fly_cost import calculate_fly_cost
 from move_player import move_player
 from reduceMoney import reduceMoney
-from gameInit import auth
+from gameInit import *
 from get_caught import get_caught
 from calculate_fines import calculate_fines
 
@@ -35,19 +35,7 @@ print("===================")
 playerData = auth(username)
 
 # Tulosta pelaajan statsit
-playerStatsHud = f"""
-        ID: {playerData.id}
-        Käyttäjänimi: {playerData.username}
-        Massit: {playerData.money}
-        Colat: {playerData.coca_cola}
-        XP: {playerData.xp}
-        Kokonaismatkustelu km: {playerData.total_travel_km}
-        Päästöt: {playerData.total_co2_consumed}
-        Nykyinen sijainti: {playerData.location}
-        Kellonaika: {playerData.clock}
-        Lahjukset: {playerData.bribes}
-"""
-print(playerStatsHud)
+printUserStats(playerData.username)
 
 while True:
     targetCountry = input("Syötä maan tunnus: ")
@@ -59,8 +47,8 @@ while True:
         print(f"Lentäminen {targetCountry} maksaa: {price}")
         print(f"Matkaa on {dist:.2f} kilometriä.")
         print("====================================")
-        confirm = input("Kirjoita lessgo matkustaaksesi: ")
 
+        confirm = input("Kirjoita lessgo matkustaaksesi: ")
         if confirm == "lessgo":
             if reduceMoney(playerData, price):
                 print("Tervetuloa maahan.")
@@ -73,11 +61,7 @@ while True:
                         print("Rahaa jäljellä", playerData.money)
 
 
-
-
-
-                print(playerStatsHud)
-
+                printUserStats(playerData.username)
 
             else:
                 print("Sinut käännytettiin kassalla kotiin. Rahat eivät riittäneet.")
