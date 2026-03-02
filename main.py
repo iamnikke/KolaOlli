@@ -3,6 +3,7 @@ from calculate_fly_cost import calculate_fly_cost
 from move_player import move_player
 from reduceMoney import reduceMoney
 from gameInit import auth
+from get_caught import get_caught
 
 #
 # Pääohjelma
@@ -64,7 +65,10 @@ while True:
                 print("Tervetuloa maahan.")
                 print("Rahaa jäljellä", playerData.money)
                 move_player(targetCountry, dist, playerData.money, playerData)
+                if get_caught():
+
                 print(playerStatsHud)
+
 
             else:
                 print("Sinut käännytettiin kassalla kotiin. Rahat eivät riittäneet.")
