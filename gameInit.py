@@ -1,5 +1,3 @@
-import random
-
 from queryDb import queryDb
 from instructions import printInstructions
 
@@ -21,7 +19,6 @@ class User:
 def auth(username):
 
     # Uuden pelaajan oletusasetukset
-    defaultId = random.randint(1,999) # TILAPÄINEN RATKAISU ID:LLE, KORVATAAN AUTO INCREMENT
     defaultUsername = "Matti Oletus"
     defaultBalance = 1000
     defaultCocaCola = 100
@@ -32,22 +29,20 @@ def auth(username):
     defaultClock = '16:00:00'
     defaultBribes = 0
 
-    # Siirretään createUser tänne, jotta se näkee oletusarvot
+    # createUser funktio auth() sisällä jotta se saa oletusarvot
     def createUser(newUsername):
         queryDb(f"""
         INSERT INTO user_info (
-            id,
             username, 
             money, 
             coca_cola, 
             xp, 
             total_travel_km,
-            co2_consumed, 
+            total_co2_consumed, 
             location, 
             clock, 
             bribes
         ) VALUES (
-            {defaultId},
             '{newUsername}', 
             {defaultBalance}, 
             {defaultCocaCola}, 
@@ -90,6 +85,7 @@ def auth(username):
 
         print("Luodaan uusi pelaaja...")
 
+        # Fallback default käyttäjänimeen jos syöte oli tyhjä
         if username == "":
             username = defaultUsername
 
