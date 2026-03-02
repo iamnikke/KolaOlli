@@ -4,6 +4,7 @@ from move_player import move_player
 from reduceMoney import reduceMoney
 from gameInit import auth
 from get_caught import get_caught
+from calculate_fines import calculate_fines
 
 #
 # Pääohjelma
@@ -66,6 +67,14 @@ while True:
                 print("Rahaa jäljellä", playerData.money)
                 move_player(targetCountry, dist, playerData.money, playerData)
                 if get_caught():
+                    fines = calculate_fines(100, 110)
+                    print(f"Jäit kiinni ylilastin kanssa, joudut maksamaan sakon: {fines} euroa")
+                    if reduceMoney(playerData, fines):
+                        print("Rahaa jäljellä", playerData.money)
+
+
+
+
 
                 print(playerStatsHud)
 
