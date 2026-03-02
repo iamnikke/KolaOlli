@@ -5,7 +5,7 @@ from reduceMoney import reduceMoney
 from gameInit import *
 from get_caught import get_caught
 from calculate_fines import calculate_fines
-from pick_transportation_method import init_vehicles, Airplane
+from pick_transportation_method import init_vehicles
 
 #
 # Pääohjelma
