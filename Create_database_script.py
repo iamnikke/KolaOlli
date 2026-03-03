@@ -59,7 +59,7 @@ def create_database_from_sql():
         with open(SQL_FILE, 'r', encoding='utf-8') as f:
             sql_data = f.read()
 
-        # Splitaa dump filen yksittäisiin toimintoihin jotkaajetaan
+        # Splitaa dump filen yksittäisiin toimintoihin jotka ajetaan
         statements = sql_data.split(';')
 
         for statement in statements:

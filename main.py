@@ -41,12 +41,14 @@ printUserStats(playerData.username)
 while True:
     targetCountry = input("Syötä maan tunnus: ")
 
+    #tulostaa vaihtoehdot lentokoneille
     vehicles = init_vehicles()
 
     print("\nValitse lentokoneesi:")
     for i, v in enumerate(vehicles):
         print(f"{i + 1}. {v.name} (Nopeus: {v.speed} km/h, Kapasiteetti: {v.capacity} tölkkiä)")
 
+    #käyttäjä valitsee lentokoneen
     try:
         pick_airplane = int(input("\nValitse lentokone (1, 2, 3): ")) - 1
         if 0 <= pick_airplane < len(vehicles):

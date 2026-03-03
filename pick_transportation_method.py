@@ -8,6 +8,7 @@ class Airplane:
         return f"Lentokone: (Nimi: {self.name}, Nopeus: {self.speed} km/h, Kapasiteetti: {self.capacity} tölkkiä)"
 
 
+#tähän voidaan vaihtaa lentokoneiden statseja
 def init_vehicles():
     small_airplane = Airplane("pieni lentokone", 1000, 50)
     medium_airplane = Airplane("keskikokoinen lentokone", 1500, 500)
