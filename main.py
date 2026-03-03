@@ -1,11 +1,5 @@
-from calculate_distance import calculate_distance
-from calculate_fly_cost import calculate_fly_cost
-from move_player import move_player
-from reduceMoney import reduceMoney
 from gameInit import *
-from get_caught import get_caught
-from calculate_fines import calculate_fines
-from pick_transportation_method import init_vehicles
+from functions import *
 
 #
 # Pääohjelma
