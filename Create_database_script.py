@@ -2,10 +2,10 @@ import mysql.connector
 from mysql.connector import errorcode
 import os
 
-DB_USER = ''
-DB_PASSWORD = ''
-DB_HOST = ''
-DB_NAME = ''
+DB_USER = 'sun db käyttäjä'
+DB_PASSWORD = 'sun db salasana'
+DB_HOST = 'sun db host'
+DB_NAME = 'tietokannan nimi'
 SQL_FILE = 'db.sql'
 
 
