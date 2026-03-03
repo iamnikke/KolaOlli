@@ -81,5 +81,4 @@ def create_database_from_sql():
             print("MariaDB connection closed.")
 
 
-if __name__ == "__main__":
-    create_database_from_sql()
+create_database_from_sql()

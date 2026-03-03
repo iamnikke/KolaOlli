@@ -162,8 +162,9 @@ def add_money(playerData, priceAmount):
     return True
 
 # Päivittää alku ja loppu locationit tietokantaan uusille riveille
-def update_passport(currentLocation, targetCountry):
+def update_passport(playerid, currentLocation, targetCountry):
+    playerco2 = 0
 
-    queryDb(f"INSERT INTO passport(start_location, end_location) VALUES ({currentLocation}, {targetCountry})")
+    queryDb(f"INSERT INTO passport(id, start_location, end_location, co2_consumed) VALUES ('{playerid}', '{currentLocation}', '{targetCountry}', '{playerco2}')")
 
     return True
