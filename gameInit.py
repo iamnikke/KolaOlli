@@ -2,7 +2,7 @@ from queryDb import queryDb
 from instructions import printInstructions
 
 class User:
-    def __init__(self, id, username, money, coca_cola, xp, total_travel_km, total_co2_consumed, location, clock, bribes, bribes_succeeded, caught, sales):
+    def __init__(self, id, username, money, coca_cola, xp, total_travel_km, total_co2_consumed, location, clock, bribes, bribes_succeeded, caught, sales, homeport):
         self.id = id
         self.username = username
         self.money = money
@@ -16,6 +16,7 @@ class User:
         self.bribes_succeeded = bribes_succeeded
         self.caught = caught
         self.sales = sales
+        self.homeport = homeport
 
 
 
@@ -35,6 +36,7 @@ def auth(username):
     defaultBribes_succeeded = 0
     defaultCaught = 0
     defaultsales = 0
+    defaultHomeport = "EFHK"
 
     # createUser funktio auth() sisällä jotta se saa oletusarvot
     def createUser(newUsername):
@@ -90,7 +92,8 @@ def auth(username):
             bribes=validateUserResult[9],
             bribes_succeeded=validateUserResult[10],
             caught=validateUserResult[11],
-            sales=validateUserResult[12]
+            sales=validateUserResult[12],
+            homeport=validateUserResult[13]
         )
 
         #print("DEBUG: gameInit = Käyttäjä löytyi -> Olio-luokan luonti onnistui. Palautetaan pääohjelmaan")
@@ -124,7 +127,8 @@ def auth(username):
                 bribes=validateUserResult[9],
                 bribes_succeeded=validateUserResult[10],
                 caught=validateUserResult[11],
-                sales=validateUserResult[12]
+                sales=validateUserResult[12],
+                homeport=validateUserResult[13]
             )
             print("Tervetuloa!")
             printInstructions()
@@ -152,7 +156,8 @@ def fetchUserdata(username):
             bribes=validateUserResult[9],
             bribes_succeeded=validateUserResult[10],
             caught=validateUserResult[11],
-            sales=validateUserResult[12]
+            sales=validateUserResult[12],
+            homeport=validateUserResult[13]
         )
 
         # print("DEBUG: gameInit = Käyttäjä löytyi -> Olio-luokan luonti onnistui. Palautetaan pääohjelmaan")
@@ -174,5 +179,6 @@ def printUserStats(username):
             Nykyinen sijainti: {playerData.location}
             Kellonaika: {playerData.clock}
             Lahjukset: {playerData.bribes}
+            Homeport: {playerData.homeport}
     """
     print(playerStatsHud)
