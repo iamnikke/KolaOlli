@@ -137,3 +137,33 @@ def get_caught():
     else:
         return False
 
+# Lisää rahaa
+def add_money(playerData, priceAmount):
+
+    playerId = playerData.id
+
+    ## [0][0] = ensimmäinen rivi, ensimmäinen sarake
+    moneyBalance = queryDb(f"SELECT money FROM user_info WHERE id = '{playerId}'")[0][0]
+
+    priceAmount = Decimal(str(priceAmount))
+
+    if moneyBalance < priceAmount:
+        # Palauta false jos rahat eivät riitä maksuun
+        return False
+
+    newBalance = moneyBalance + priceAmount
+
+    # Päivitä olio
+    playerData.money = newBalance
+    # Päivitä käyttäjän rahasaldo tietokantaan
+    queryDb(f"UPDATE user_info SET money = '{newBalance}' WHERE id = '{playerId}'")
+
+    # Palauta true jos rahat riittävät
+    return True
+
+# Päivittää alku ja loppu locationit tietokantaan uusille riveille
+def update_passport(currentLocation, targetCountry):
+
+    queryDb(f"INSERT INTO passport(start_location, end_location) VALUES ({currentLocation}, {targetCountry})")
+
+    return True
