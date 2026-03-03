@@ -3,14 +3,15 @@ import os
 
 
 #AJAMALLA SKRIPTIN SAAT TIETOKANNAN OMALLE TIETOKONEESI MARIADB:LLE
+# Täytä tietosi kohtiin jossa lukee täytä
 
 DB_CONFIG = {
-    'user': 'root',
-    'password': 'Aaro22',
-    'host': '127.0.0.1',
+    'user': 'täytä',
+    'password': 'täytä',
+    'host': 'täytä',
     'autocommit': True
 }
-DB_NAME = 'cola_game_xx'
+DB_NAME = 'täytä'
 SQL_FILE = 'db.sql'
 
 
