@@ -58,6 +58,7 @@ while True:
     if targetCountry != "":
         dist = calculate_distance(playerData.location, targetCountry)
         price = float(f"{calculate_fly_cost(dist):.2f}")
+        updatePassport = update_passport(playerData.location, targetCountry)
 
         print(f"Lentäminen {targetCountry} maksaa: {price}")
         print(f"Matkaa on {dist:.2f} kilometriä.")
