@@ -1,5 +1,6 @@
 from gameInit import *
 from functions import *
+from reduce_cola import *
 
 #
 # Pääohjelma
@@ -63,19 +64,51 @@ while True:
         print(f"Matkaa on {dist:.2f} kilometriä.")
         print("====================================")
 
+        load =  int(input("Kuinka monta tölkkiä colaa otat mukaan?"))
+
         confirm = input("Kirjoita lessgo matkustaaksesi: ")
         if confirm == "lessgo":
-            if reduceMoney(playerData, price):
+            if reduceMoney(playerData, price) and reduceCola(playerData, load):
                 print("Tervetuloa maahan.")
                 print("Rahaa jäljellä", playerData.money)
                 move_player(targetCountry, dist, playerData.money, playerData)
                 capacity = selected_vehicle.capacity
-                if get_caught():
-                    fines = calculate_fines(capacity, 110)
-                    print(f"Jäit kiinni ylilastin kanssa, joudut maksamaan sakon: {fines} euroa")
-                    if reduceMoney(playerData, fines):
-                        print("Rahaa jäljellä", playerData.money)
 
+                if capacity < load:
+                    # Arpoo jääkö pelaaja kiinni tullissa
+                    if get_caught():
+                        # laskee sakon
+                        fines = calculate_fines(capacity, load)
+                        print(f"Jäit kiinni ylilastin kanssa, joudut maksamaan sakon: {fines} euroa")
+
+                        # attempt bribe
+                        bribe = input("Lahjonta: yes / no: ")
+                        bribePrice = fines * 0.2
+                        print("Lahjonta maksaa", bribePrice)
+
+                        if bribe == "yes":
+                            # Yritä lahjoa -> vähennä lahjonnan hinta
+                            if reduceMoney(playerData, bribePrice):
+                                # Arvo suostuuko tullivirkailija lahjukseen, jos ei, eli jää kiinni niin sakko x 2
+                                if get_caught():
+                                    fines = fines * 2
+                                # Jos suostuu niin sakot nolla
+                                else:
+                                    fines = 0
+                            # Else jos rahat ei riitä lahjukseen
+                            else:
+                                print("Rahat ei riitä lahjontaan")
+
+                        # Jos rahat riittää maksuun
+                        if reduceMoney(playerData, fines):
+                            print("Rahaa jäljellä", playerData.money)
+                        # rahat ei riitä sakkoon
+                        else:
+                            print("Game over tulossa pian")
+                            break
+                            # game over-funktio
+                else:
+                    print("Selvisit tullista")
 
                 printUserStats(playerData.username)
 
