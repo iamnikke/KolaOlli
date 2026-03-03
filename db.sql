@@ -101,7 +101,7 @@ CREATE TABLE `passport` (
   `distance` decimal(20,2) DEFAULT NULL,
   `co2_consumed` decimal(20,2) DEFAULT NULL,
   PRIMARY KEY (`travel_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -126,8 +126,8 @@ CREATE TABLE `passport_bridge` (
   `passport_id` int(11) NOT NULL,
   PRIMARY KEY (`user_id`,`passport_id`),
   KEY `passportid` (`passport_id`),
-  CONSTRAINT `1` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`id`),
-  CONSTRAINT `2` FOREIGN KEY (`passport_id`) REFERENCES `passport` (`id`)
+  CONSTRAINT `fk_passport` FOREIGN KEY (`passport_id`) REFERENCES `passport` (`travel_id`),
+  CONSTRAINT `fk_user` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -190,4 +190,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-03-03 14:40:14
+-- Dump completed on 2026-03-03 19:17:51

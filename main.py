@@ -1,6 +1,5 @@
 from gameInit import *
 from functions import *
-from reduce_cola import *
 
 #
 # Pääohjelma

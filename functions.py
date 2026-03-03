@@ -137,6 +137,7 @@ def get_caught():
     else:
         return False
 
+
 # Lisää rahaa
 def add_money(playerData, priceAmount):
 
@@ -161,9 +162,51 @@ def add_money(playerData, priceAmount):
     # Palauta true jos rahat riittävät
     return True
 
+
 # Päivittää alku ja loppu locationit tietokantaan uusille riveille
 def update_passport(playerid, currentLocation, targetCountry, co2):
 
     queryDb(f"INSERT INTO passport(id, start_location, end_location, co2_consumed) VALUES ('{playerid}', '{currentLocation}', '{targetCountry}', '{co2}')")
 
     return True
+
+
+# Reduce cola
+def reduceCola(playerData, colaAmount):
+
+    # Muuttuja pelkän pelaajan ID:n erottamiseksi oliosta
+    playerId = playerData.id
+
+    ## [0][0] = ensimmäinen rivi, ensimmäinen sarake
+    colaBalance = queryDb(f"SELECT coca_cola FROM user_info WHERE id = '{playerId}'")[0][0]
+
+    if colaBalance < colaAmount:
+        # debug
+        #print("Ei riittävästi colaa!")
+        #print(colaBalance)
+
+        # Palauta false jos colaa ei tarpeeksi stashis
+        return False
+
+    newBalance = colaBalance - colaAmount
+
+    # Päivitä olio
+    playerData.coca_cola = newBalance
+    # Päivitä käyttäjän colasaldo tietokantaan
+    queryDb(f"UPDATE user_info SET coca_cola = '{newBalance}' WHERE id = '{playerId}'")
+
+    # Palauta true jos colaa tarpeeks
+    return True
+
+
+#päivittää lahjonnat
+def updatebribes(playerData,amount):
+    playerId = playerData.id
+    currentBribesAmount = queryDb(f"select bribes from user_info where id = '{playerId}'")[0][0]
+    newBribesAmount = currentBribesAmount + amount
+
+    playerData.bribes = newBribesAmount
+    queryDb(f"UPDATE user_info SET bribes='{newBribesAmount}' WHERE id = '{playerId}'")
+    return True
+
+
