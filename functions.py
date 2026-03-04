@@ -237,3 +237,37 @@ def multiply_load(distance, load):
     multiplier = distance / 1000 + 1
     loadValue = load * multiplier * 3
     return loadValue
+
+
+# päästöt
+def updateco2(playerData, amount):
+    playerId = playerData.id
+    currentCo2Consumed = queryDb(f"select total_co2_consumed from user_info where id = '{playerId}'")[0][0]
+    newCo2Consumed = currentCo2Consumed + amount
+
+    playerData.total_co2_consumed = newCo2Consumed
+    queryDb(f"UPDATE user_info SET total_co2_consumed='{newCo2Consumed}' WHERE id = '{playerId}'")
+    return True
+
+
+#passport rivien poisto niin, että jää vain 1 "default rivi"
+def gameover(id):
+
+    queryDb(f"delete from passport where id = '{id}'")
+
+    return print(f"""
+     _____                                                                                  _____ 
+    ( ___ )                                                                                ( ___ )
+     |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   | 
+     |   |                                                                                  |   | 
+     |   |        ____      _      __  __   _____      ___   __     __  _____   ____        |   | 
+     |   |       / ___|    / \    |  \/  | | ____|    / _ \  \ \   / / | ____| |  _ \       |   | 
+     |   |      | |  _    / _ \   | |\/| | |  _|     | | | |  \ \ / /  |  _|   | |_) |      |   | 
+     |   |      | |_| |  / ___ \  | |  | | | |___    | |_| |   \ V /   | |___  |  _ <       |   | 
+     |   |       \____| /_/   \_\ |_|  |_| |_____|    \___/     \_/    |_____| |_| \_\      |   | 
+     |   |                                                                                  |   | 
+     |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___| 
+    (_____)                                                                                (_____)
+    """)
+
+
