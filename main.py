@@ -72,6 +72,7 @@ while True:
         if confirm == "lessgo":
             if reduceMoney(playerData, price) and reduceCola(playerData, load):
                 print("Tervetuloa maahan.")
+                update_time(playerData.id, dist, selected_vehicle.speed)
                 print("Rahaa jäljellä", playerData.money)
                 move_player(targetCountry, dist, playerData.money, playerData)
                 capacity = selected_vehicle.capacity
