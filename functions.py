@@ -2,6 +2,7 @@ from queryDb import queryDb
 from decimal import Decimal
 from geopy import distance
 import random
+from datetime import timedelta
 
 # Get user location
 def get_user_location(user_id):
@@ -209,4 +210,27 @@ def updatebribes(playerData,amount):
     queryDb(f"UPDATE user_info SET bribes='{newBribesAmount}' WHERE id = '{playerId}'")
     return True
 
+
+# Päivittää ajan
+def update_time(playerId, dist, speed):
+
+    if speed <= 0:
+        return "Nopeuden pitää olla suurempi kuin nolla"
+    elif dist <= 0:
+        return "Matkan pituuden pitää olla suurempi kuin nolla"
+
+    hours_decimal = dist / speed
+
+    duration = timedelta(hours=hours_decimal)
+    total_seconds = int(duration.total_seconds())
+    hours = total_seconds // 3600
+    minutes = (total_seconds % 3600) // 60
+    seconds = total_seconds % 60
+    time_str = f"{hours:02}:{minutes:02}:{seconds:02}"
+
+    queryDb(f"UPDATE user_info SET clock = ADDTIME(clock, '{time_str}') WHERE id = '{playerId}'")
+
+    new_time = queryDb(f"SELECT clock FROM user_info WHERE id ='{playerId}'")
+
+    return True
 
