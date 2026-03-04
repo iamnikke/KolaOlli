@@ -234,3 +234,8 @@ def update_time(playerId, dist, speed):
 
     return True
 
+# Lisää multiplierin myyntihintaan
+def multiply_load(distance, load):
+    multiplier = distance / 1000 + 1
+    loadValue = load * multiplier * 3
+    return loadValue

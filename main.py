@@ -1,6 +1,5 @@
 from gameInit import *
 from functions import *
-from multiply_load import *
 
 #
 # Pääohjelma
