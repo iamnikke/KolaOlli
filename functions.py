@@ -230,8 +230,6 @@ def update_time(playerId, dist, speed):
 
     queryDb(f"UPDATE user_info SET clock = ADDTIME(clock, '{time_str}') WHERE id = '{playerId}'")
 
-    new_time = queryDb(f"SELECT clock FROM user_info WHERE id ='{playerId}'")
-
     return True
 
 # Lisää multiplierin myyntihintaan
