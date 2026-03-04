@@ -1,5 +1,12 @@
-def gameover():
-    print(f"""
+#passport rivien poisto niin, että jää vain 1 "default rivi"
+
+from queryDb import queryDb
+
+def gameover(id):
+
+    queryDb(f"delete from passport where id = '{id}'")
+
+    return print(f"""
      _____                                                                                  _____ 
     ( ___ )                                                                                ( ___ )
      |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   | 
