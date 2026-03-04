@@ -1,5 +1,6 @@
 from gameInit import *
 from functions import *
+from multiply_load import *
 
 #
 # Pääohjelma
@@ -109,7 +110,10 @@ while True:
                             break
                             # game over-funktio
                 else:
+                    loadValue = multiply_load(dist, load)
+                    add_money(playerData, loadValue)
                     print("Selvisit tullista")
+
 
                 printUserStats(playerData.username)
 
