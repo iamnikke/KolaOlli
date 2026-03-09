@@ -2,7 +2,6 @@ import random
 
 from gameInit import *
 from functions import *
-from printWelcomeHud import *
 
 #
 # Pääohjelma
@@ -152,7 +151,7 @@ while True:
             addCola(playerData, colaAmount)
 
             if playerData.xp >= 1000:
-                printWinner()
+                printWinner(playerData.id)
                 break
 
 

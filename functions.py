@@ -353,6 +353,8 @@ def printSelectAirportHud(vehicles, playerData, prices):
 
     print("========================================")
 
+    return
+
 
 # Printtaa matkustusvaihtoehdot
 def printSelectCountryHud(playerData):
@@ -366,7 +368,7 @@ def printSelectCountryHud(playerData):
         'Varsova, Puola': 'EPWA',
         'Pariisi, Ranska': 'LFPG',
         'Kööpenhamina, Tanska': 'EKCH',
-        'Ankara, Turkki': 'LTAC',
+        'Ateena, Kreikka': 'LGAV',
         'Minsk, Valko-Venäjä': 'UMMS',
         'Viro, Tallinna': 'EETN',
     }
@@ -391,6 +393,8 @@ def printSelectCountryHud(playerData):
 
     print("========================================")
 
+    return
+
 
 #kasvatetaan kokonaismatkaa
 def updatedistance(playerData, amount):
@@ -401,3 +405,87 @@ def updatedistance(playerData, amount):
     playerData.total_travel_km = newDistanceAmount
     queryDb(f"UPDATE user_info SET total_travel_km='{newDistanceAmount}' WHERE id = '{playerId}'")
     return True
+
+
+def printWelcomeHud(xpValue, loadValue, playerData):
+    print("""
+    ========================================
+
+
+
+
+
+          ////^\\\\
+          | ^   ^ |
+         @ (o) (o) @
+          |   <   |
+          |  ___  |
+           \\_____/
+         ____|  |____
+    ========================
+    > Saavuit kohteeseen.
+
+    Tervetuloa maahan!
+    """)
+
+    print(f"Ansaitsit {xpValue} tasopistettä!")
+    print(f"Sinulla on nyt yhteensä {playerData.xp:.2f} tasopistettä!")
+    print("")
+    print(f"Tienasit {loadValue:.2f} €!")
+    print(f"Sinulla on nyt {playerData.money:.2f} €!")
+
+    return
+
+
+def printTripFinished(colaAmount):
+    print("========================================")
+    print("""
+
+                 ,#####,
+                 #_   _#
+                 |a` `a|
+                 |  u  |
+                 \\  =  /
+                 |\\___/|
+        ___ ____/:     :\\____ ___
+      .'   `.-===-\\   /-===-.`   '.
+     /      .-\"\"\"\"\"--\"\"\"\"\"-.      \\\\              ////^\\\\
+    /'             =:=             '\\\\            | ^   ^ |
+  .'  ' .:    o   -=:=-   o    :. '  `.          @ (o) (o) @
+  (.'   /'. '-.....-|-.....-' .'\\   '.)           |   <   |
+  /' ._/   ".     --:--     ."   \\_. '\\\\          |  ___  |
+ |  .'|      ".  ---:---  ."      |'.  |           \\_____/
+ |  : |       |  ---:---  |       | :  |         ____|  |____
+    ========================
+    > Saavuit kotiin.
+          """)
+    print(f"Faija toi sinulle töistä {colaAmount} colaa.")
+
+    return
+
+
+def printWinner(id):
+    queryDb(f"delete from passport where id = '{id}'")
+    queryDb(f"delete from user_info where id = '{id}'")
+    print("========================================")
+    print("""
+
+                     ,#####,
+                     #_   _#
+                     |a` `a|
+                     |  u  |
+                     \\  =  /
+                     |\\___/|
+            ___ ____/:     :\\____ ___
+          .'   `.-===-\\   /-===-.`   '.
+         /      .-\"\"\"\"\"--\"\"\"\"\"-.      \\\\              ////^\\\\
+        /'             =:=             '\\\\            | ^   ^ |
+      .'  ' .:    o   -=:=-   o    :. '  `.          @ (o) (o) @
+      (.'   /'. '-.....-|-.....-' .'\\   '.)           |   <   |
+      /' ._/   ".     --:--     ."   \\_. '\\\\          |  ___  |
+     |  .'|      ".  ---:---  ."      |'.  |           \\_____/
+     |  : |       |  ---:---  |       | :  |         ____|  |____
+        ========================
+        > Voitit pelin. Faija on ylpiä!
+              """)
+    return
