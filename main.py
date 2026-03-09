@@ -126,7 +126,7 @@ while True:
                 xpValue = int(dist / 10)
                 addXp(playerData, xpValue)
 
-                print(f"Keräsit reissulta {xpValue} xp:tä.")
+                print(f"Keräsit reissulta {xpValue} xp:tä")
                 print(f"Tienasit  {int(loadValue)} euroa.")
                 print("DEBUG",playerData.location, "->", playerData.homeport )
                 input("Lennä takaisin kotiin painamalla Enter...")
