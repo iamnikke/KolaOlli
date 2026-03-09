@@ -11,9 +11,8 @@ from Setup_database_script import *
 #
 #
 
-try:
-    queryDb("SELECT 1")
-except:
+
+if not queryDb("SELECT 1"):
     setup_database()
 
 # Alkutekstit
@@ -70,7 +69,8 @@ while True:
         dist = calculate_distance(playerData.location, targetCountry)
         price = float(f"{calculate_fly_cost(dist):.2f}")
         currentco2 = calculate_effluent(dist)
-        updatePassport = update_passport(playerData.id, playerData.location, targetCountry, currentco2)
+        updatePassport = update_passport(playerData, playerData.location, targetCountry, currentco2)
+        updateco2(playerData, currentco2)
 
         print(f"Lentäminen {targetCountry} maksaa: {price}")
         print(f"Matkaa on {dist:.2f} kilometriä.")
@@ -131,7 +131,8 @@ while True:
                 dist = calculate_distance(playerData.location, playerData.homeport)
                 price = float(f"{calculate_fly_cost(dist):.2f}")
                 currentco2 = calculate_effluent(dist)
-                updatePassportAgain = update_passport(playerData.id, playerData.location, playerData.homeport, currentco2)
+                updatePassportAgain = update_passport(playerData, playerData.location, playerData.homeport, currentco2)
+                updateco2(playerData, currentco2)
                 update_time(playerData.id, dist, selected_vehicle.speed)
                 move_player(playerData.homeport, dist, playerData.money, playerData)
 

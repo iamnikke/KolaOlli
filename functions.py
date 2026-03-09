@@ -161,7 +161,8 @@ def add_money(playerData, priceAmount):
 
 
 # Päivittää alku ja loppu locationit tietokantaan uusille riveille
-def update_passport(playerid, currentLocation, targetCountry, co2):
+def update_passport(playerData, currentLocation, targetCountry, co2):
+    playerid = playerData.id
 
     queryDb(f"INSERT INTO passport(id, start_location, end_location, co2_consumed) VALUES ('{playerid}', '{currentLocation}', '{targetCountry}', '{co2}')")
 
@@ -239,7 +240,7 @@ def multiply_load(distance, load):
 def updateco2(playerData, amount):
     playerId = playerData.id
     currentCo2Consumed = queryDb(f"select total_co2_consumed from user_info where id = '{playerId}'")[0][0]
-    newCo2Consumed = currentCo2Consumed + amount
+    newCo2Consumed = currentCo2Consumed + Decimal(amount)
 
     playerData.total_co2_consumed = newCo2Consumed
     queryDb(f"UPDATE user_info SET total_co2_consumed='{newCo2Consumed}' WHERE id = '{playerId}'")

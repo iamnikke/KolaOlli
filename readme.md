@@ -1,0 +1,1 @@
+python3 -m pip install geographiclib geopy mysql-connector-python

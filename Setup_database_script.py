@@ -71,6 +71,3 @@ def setup_database():
             cursor.close()
         if conn and conn.is_connected():
             conn.close()
-
-
-setup_database()
