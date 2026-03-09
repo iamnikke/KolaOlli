@@ -22,8 +22,15 @@ def printSelectCountryHud(playerData):
         dist = calculate_distance(playerData.location, icao)
         price = float(f"{calculate_fly_cost(dist):.2f}")
 
+        canAfford = ""
+
+        if playerData.money > price:
+            canAfford = "Rahat riittää ✅"
+        else:
+            canAfford = "Rahat eivät riitä ❌"
+
         print(icao + " --> " + country)
-        print("     ", int(dist), "km päässä | Meno-paluu", price, "€")
+        print("     ", int(dist), "km päässä | Meno-paluu", price, "€ | ", canAfford)
         print("")
 
 

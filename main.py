@@ -5,7 +5,7 @@ from functions import *
 from printSelectCountryHud import *
 from add_cola import *
 from Setup_database_script import *
-from add_xp import *
+from printSelectAirplaneHud import *
 
 #
 # Pääohjelma
@@ -47,9 +47,7 @@ while True:
     #tulostaa vaihtoehdot lentokoneille
     vehicles = init_vehicles()
 
-    print("\nValitse lentokoneesi:")
-    for i, v in enumerate(vehicles):
-        print(f"{i + 1}. {v.name} (Nopeus: {v.speed} km/h, Kapasiteetti: {v.capacity} tölkkiä)")
+    printSelectAirportHud(vehicles, playerData)
 
     #käyttäjä valitsee lentokoneen
     try:
@@ -116,7 +114,7 @@ while True:
                             print("Rahaa jäljellä", playerData.money)
                         # rahat ei riitä sakkoon = Peli päättyy
                         else:
-                            print("Game over tulossa pian")
+                            gameover(playerData.id)
                             break
                             # game over-funktio
 
@@ -126,8 +124,8 @@ while True:
                 xpValue = int(dist / 10)
                 addXp(playerData, xpValue)
 
-                print(f"Keräsit reissulta {xpValue} xp:tä")
-                print(f"Tienasit  {int(loadValue)} euroa.")
+                print("Keräsit XP", xpValue)
+                print("Tienasit ", loadValue)
                 print("DEBUG",playerData.location, "->", playerData.homeport )
                 input("Lennä takaisin kotiin painamalla Enter...")
                 dist = calculate_distance(playerData.location, playerData.homeport)
