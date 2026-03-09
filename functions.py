@@ -1,3 +1,5 @@
+from geopy.distance import geodesic
+
 from queryDb import queryDb
 from decimal import Decimal
 from geopy import distance
@@ -84,13 +86,13 @@ def calculate_effluent(distance):
 def calculate_distance(currentLocation, targetCountry):
 
     # haetaan lentokenttien koordinaatit tietokannasta
-    currentLocationXY = queryDb(f"SELECT longitude_deg, latitude_deg FROM airport WHERE ident = '{currentLocation}'")
-    targetCountryXY = queryDb(f"SELECT longitude_deg, latitude_deg FROM airport WHERE ident = '{targetCountry}'")
+    currentLocationXY = queryDb(f"SELECT latitude_deg, longitude_deg FROM airport WHERE ident = '{currentLocation}'")
+    targetCountryXY = queryDb(f"SELECT latitude_deg, longitude_deg FROM airport WHERE ident = '{targetCountry}'")
 
     # laskee lentokenttien etäisyyden
-    dist = distance.distance(currentLocationXY, targetCountryXY)
+    dist = geodesic(currentLocationXY, targetCountryXY).km
     # print (f"Etäisyys: {dist.km:.2f} km")
-    return dist.km
+    return dist
 
 
 # Calculate fines
@@ -310,7 +312,7 @@ def addXp(playerData, xpAmount):
 
 
 # Printtaa lentokone vaihtoehdot
-def printSelectAirportHud(vehicles, playerData):
+def printSelectAirportHud(vehicles, playerData, prices):
     print("========================================")
 
     print(f"""
@@ -324,15 +326,19 @@ def printSelectAirportHud(vehicles, playerData):
 
           VALITSE LENTOKONE
           Sinulla on {playerData.coca_cola} colaa
+          Ja {playerData.money} euroa rahaa
     """)
 
     i = 0
 
     for vehicle in vehicles:
+        i += 1
+
         print(f"""
-        {i + 1}. {vehicle.name} 
+        {i}. {vehicle.name} 
         Nopeus: {vehicle.speed} km/h 
         Kapasiteetti: {vehicle.capacity} tölkkiä
+        Hinta: {prices[i - 1]:.2f} €
         """)
 
     print("========================================")
