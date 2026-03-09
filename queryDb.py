@@ -1,5 +1,4 @@
 import mysql.connector
-from Setup_database_script import setup_database
 
 def queryDb(query):
 
