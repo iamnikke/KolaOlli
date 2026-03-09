@@ -17,9 +17,16 @@ def get_user_location(user_id):
 # Move player
 def move_player(icao, travel_distance, user_money, playerData):
 
+    user_id = playerData.id
+
+    prev_travel_distance = queryDb(f"SELECT total_travel_km FROM user_info where id = {user_id}")[0][0]
+
+    total_travel_distance = Decimal(travel_distance) + prev_travel_distance
+
     game_id = playerData.id
-    queryDb(f"UPDATE user_info SET location = '{icao}', total_travel_km = '{travel_distance}', money = '{user_money}' WHERE id = '{game_id}'")
+    queryDb(f"UPDATE user_info SET location = '{icao}', total_travel_km = '{total_travel_distance}', money = '{user_money}' WHERE id = '{game_id}'")
     playerData.location = icao
+    playerData.total_travel_km = total_travel_distance
 
     return True
 
