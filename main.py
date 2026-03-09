@@ -2,7 +2,6 @@ import random
 
 from gameInit import *
 from functions import *
-from Setup_database_script import *
 
 #
 # Pääohjelma
