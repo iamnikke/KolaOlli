@@ -1,3 +1,5 @@
+from geopy.distance import geodesic
+
 from queryDb import queryDb
 from decimal import Decimal
 from geopy import distance
@@ -84,13 +86,13 @@ def calculate_effluent(distance):
 def calculate_distance(currentLocation, targetCountry):
 
     # haetaan lentokenttien koordinaatit tietokannasta
-    currentLocationXY = queryDb(f"SELECT longitude_deg, latitude_deg FROM airport WHERE ident = '{currentLocation}'")
-    targetCountryXY = queryDb(f"SELECT longitude_deg, latitude_deg FROM airport WHERE ident = '{targetCountry}'")
+    currentLocationXY = queryDb(f"SELECT latitude_deg, longitude_deg FROM airport WHERE ident = '{currentLocation}'")
+    targetCountryXY = queryDb(f"SELECT latitude_deg, longitude_deg FROM airport WHERE ident = '{targetCountry}'")
 
     # laskee lentokenttien etäisyyden
-    dist = distance.distance(currentLocationXY, targetCountryXY)
+    dist = geodesic(currentLocationXY, targetCountryXY).km
     # print (f"Etäisyys: {dist.km:.2f} km")
-    return dist.km
+    return dist
 
 
 # Calculate fines
