@@ -251,6 +251,7 @@ def updateco2(playerData, amount):
 def gameover(id):
 
     queryDb(f"delete from passport where id = '{id}'")
+    queryDb(f"delete from user_info where id = '{id}'")
 
     return print(f"""
      _____                                                                                  _____ 
