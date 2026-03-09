@@ -6,3 +6,5 @@ def printInstructions():
     ohje 2.
     
     """)
+
+    input("Paina enter jatkaaksesi...")

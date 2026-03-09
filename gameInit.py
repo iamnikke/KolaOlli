@@ -169,16 +169,16 @@ def printUserStats(username):
 
     # Tulosta pelaajan statsit
     playerStatsHud = f"""
-            ID: {playerData.id}
-            Käyttäjänimi: {playerData.username}
-            Massit: {playerData.money}
-            Colat: {playerData.coca_cola}
-            XP: {playerData.xp}
-            Kokonaismatkustelu km: {playerData.total_travel_km}
-            Päästöt: {playerData.total_co2_consumed}
-            Nykyinen sijainti: {playerData.location}
-            Kellonaika: {playerData.clock}
-            Lahjukset: {playerData.bribes}
-            Homeport: {playerData.homeport}
+            👤 Käyttäjänimi: {playerData.username} | Taso: {playerData.xp} (ID: {playerData.id})
+            💰{playerData.money} | 🥤{playerData.coca_cola}
+            🕙{playerData.clock} | 📍{playerData.location}
+            
+            TILASTOJA
+            | Päästöt: {playerData.total_co2_consumed} 
+            | Matkustettu yhteensä: {playerData.total_travel_km}
+            | Lahjuksia maksettu: {playerData.bribes}
+            
+            DEBUG:
+            HOMEPORT: {playerData.homeport} | 
     """
     print(playerStatsHud)
