@@ -1,6 +1,6 @@
 from functions import *
 
-def printSelectAirportHud(vehicles, playerData):
+def printSelectAirportHud(vehicles, playerData, prices):
 
     print("========================================")
 
@@ -15,16 +15,19 @@ def printSelectAirportHud(vehicles, playerData):
           
           VALITSE LENTOKONE
           Sinulla on {playerData.coca_cola} colaa
+          Ja {playerData.money} euroa rahaa
     """)
 
     i = 0
 
     for vehicle in vehicles:
+        i += 1
 
         print(f"""
-        {i + 1}. {vehicle.name} 
+        {i}. {vehicle.name} 
         Nopeus: {vehicle.speed} km/h 
         Kapasiteetti: {vehicle.capacity} tölkkiä
+        Hinta: {prices[i-1]:.2f} €
         """)
 
     print("========================================")

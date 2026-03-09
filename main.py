@@ -6,6 +6,7 @@ from printSelectCountryHud import *
 from add_cola import *
 from Setup_database_script import *
 from printSelectAirplaneHud import *
+from add_xp import *
 
 #
 # Pääohjelma
@@ -47,24 +48,37 @@ while True:
     #tulostaa vaihtoehdot lentokoneille
     vehicles = init_vehicles()
 
-    printSelectAirportHud(vehicles, playerData)
-
-    #käyttäjä valitsee lentokoneen
-    try:
-        pick_airplane = int(input("\nValitse lentokone (1, 2, 3): ")) - 1
-        if 0 <= pick_airplane < len(vehicles):
-            selected_vehicle = vehicles[pick_airplane]
-            print(f"Valitsit: {selected_vehicle.name}")
-        else:
-            print("Virhe! Lentokonetta ei ole olemassa.")
-            continue  # menee takaisin main looppiin
-    except ValueError:
-        print("Anna numero.")
-        continue
-
     if targetCountry != "":
+
         dist = calculate_distance(playerData.location, targetCountry)
         price = float(f"{calculate_fly_cost(dist):.2f}")
+
+        prices = [
+            price,
+            price * 1.2,
+            price * 1.5
+        ]
+
+        printSelectAirportHud(vehicles, playerData, prices)
+
+        # käyttäjä valitsee lentokoneen
+        try:
+            pick_airplane = int(input("\nValitse lentokone (1, 2, 3): ")) - 1
+            if 0 <= pick_airplane < len(vehicles):
+                selected_vehicle = vehicles[pick_airplane]
+                print(f"Valitsit: {selected_vehicle.name}")
+            else:
+                print("Virhe! Lentokonetta ei ole olemassa.")
+                continue  # menee takaisin main looppiin
+        except ValueError:
+            print("Anna numero.")
+            continue
+
+        price = Decimal(prices[pick_airplane])
+        print(price)
+
+        input("Paina enter jatkaaksesi...")
+
         currentco2 = calculate_effluent(dist)
         updatePassport = update_passport(playerData, playerData.location, targetCountry, currentco2)
         updateco2(playerData, currentco2)
