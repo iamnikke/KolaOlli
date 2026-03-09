@@ -271,3 +271,117 @@ def gameover(id):
     return
 
 
+# Lisää kolaa
+def addCola(playerData, colaAmount):
+
+    # Muuttuja pelkän pelaajan ID:n erottamiseksi oliosta
+    playerId = playerData.id
+
+    ## [0][0] = ensimmäinen rivi, ensimmäinen sarake
+    colaBalance = queryDb(f"SELECT coca_cola FROM user_info WHERE id = '{playerId}'")[0][0]
+
+    newBalance = colaBalance + colaAmount
+
+    # Päivitä olio
+    playerData.coca_cola = newBalance
+    # Päivitä käyttäjän colasaldo tietokantaan
+    queryDb(f"UPDATE user_info SET coca_cola = '{newBalance}' WHERE id = '{playerId}'")
+
+    return True
+
+
+#Lisää xptä
+def addXp(playerData, xpAmount):
+
+    # Muuttuja pelkän pelaajan ID:n erottamiseksi oliosta
+    playerId = playerData.id
+
+    ## [0][0] = ensimmäinen rivi, ensimmäinen sarake
+    xpBalance = queryDb(f"SELECT xp FROM user_info WHERE id = '{playerId}'")[0][0]
+
+    newBalance = xpBalance + xpAmount
+
+    # Päivitä olio
+    playerData.xp = newBalance
+    # Päivitä käyttäjän xp tietokantaan
+    queryDb(f"UPDATE user_info SET xp = '{newBalance}' WHERE id = '{playerId}'")
+
+    return True
+
+
+# Printtaa lentokone vaihtoehdot
+def printSelectAirportHud(vehicles, playerData):
+    print("========================================")
+
+    print(f"""
+           _
+         -=\\`\\
+     |\\ ____\\_\\__
+   -=\\c`"*"*"*"* "`)
+      `~~~~~/ /~~`
+        -==/ /
+          '-'
+
+          VALITSE LENTOKONE
+          Sinulla on {playerData.coca_cola} colaa
+    """)
+
+    i = 0
+
+    for vehicle in vehicles:
+        print(f"""
+        {i + 1}. {vehicle.name} 
+        Nopeus: {vehicle.speed} km/h 
+        Kapasiteetti: {vehicle.capacity} tölkkiä
+        """)
+
+    print("========================================")
+
+
+# Printtaa matkustusvaihtoehdot
+def printSelectCountryHud(playerData):
+
+    allowedCountries = {
+        'Austria': 'LOWW',
+        'Bryssel, Belgium': 'EBBR',
+        'Madrid, Espanja': 'LEMD',
+        'Rooma, Italia': 'LIRF',
+        'Luxemburg, Luxemburg': 'ELLX',
+        'Varsova, Puola': 'EPWA',
+        'Pariisi, Ranska': 'LFPG',
+        'Kööpenhamina, Tanska': 'EKCH',
+        'Ankara, Turkki': 'LTAC',
+        'Minsk, Valko-Venäjä': 'UMMS',
+        'Viro, Tallinna': 'EETN',
+    }
+
+    print("========================================")
+
+    for country, icao in allowedCountries.items():
+        dist = calculate_distance(playerData.location, icao)
+        price = float(f"{calculate_fly_cost(dist):.2f}")
+
+        canAfford = ""
+
+        if playerData.money > price:
+            canAfford = "Rahat riittää ✅"
+        else:
+            canAfford = "Rahat eivät riitä ❌"
+
+        print(icao + " --> " + country)
+        print("     ", int(dist), "km päässä | Meno-paluu", price, "€ | ", canAfford)
+        print("")
+
+
+    print("========================================")
+
+
+#kasvatetaan kokonaismatkaa
+def updatedistance(playerData, amount):
+    playerId = playerData.id
+    currentDistanceAmount = queryDb(f"select total_travel_km from user_info where id = '{playerId}'")[0][0]
+    newDistanceAmount = currentDistanceAmount + amount
+
+    playerData.total_travel_km = newDistanceAmount
+    queryDb(f"UPDATE user_info SET total_travel_km='{newDistanceAmount}' WHERE id = '{playerId}'")
+    return True

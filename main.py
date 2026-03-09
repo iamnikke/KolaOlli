@@ -1,12 +1,8 @@
 import random
-
+from queryDb import queryDb
 from gameInit import *
 from functions import *
-from printSelectCountryHud import *
-from add_cola import *
 from Setup_database_script import *
-from printSelectAirplaneHud import *
-from add_xp import *
 
 #
 # Pääohjelma
