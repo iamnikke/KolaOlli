@@ -1,5 +1,9 @@
+import random
+
 from gameInit import *
 from functions import *
+from printSelectCountryHud import *
+from add_cola import *
 
 #
 # Pääohjelma
@@ -33,6 +37,7 @@ playerData = auth(username)
 printUserStats(playerData.username)
 
 while True:
+    printSelectCountryHud(playerData)
     targetCountry = input("Syötä maan tunnus: ")
 
     #tulostaa vaihtoehdot lentokoneille
@@ -104,15 +109,30 @@ while True:
                         # Jos rahat riittää maksuun
                         if reduceMoney(playerData, fines):
                             print("Rahaa jäljellä", playerData.money)
-                        # rahat ei riitä sakkoon
+                        # rahat ei riitä sakkoon = Peli päättyy
                         else:
                             print("Game over tulossa pian")
                             break
                             # game over-funktio
-                else:
-                    loadValue = multiply_load(dist, load)
-                    add_money(playerData, loadValue)
-                    print("Selvisit tullista")
+
+                # OHJELMA JATKUU
+                loadValue = multiply_load(dist, load)
+                add_money(playerData, loadValue)
+
+                print("Tienasit ", loadValue)
+                print("DEBUG",playerData.location, "->", playerData.homeport )
+                input("Lennä takaisin kotiin painamalla Enter...")
+                dist = calculate_distance(playerData.location, playerData.homeport)
+                price = float(f"{calculate_fly_cost(dist):.2f}")
+                currentco2 = calculate_effluent(dist)
+                updatePassportAgain = update_passport(playerData.id, playerData.location, playerData.homeport, currentco2)
+                update_time(playerData.id, dist, selected_vehicle.speed)
+                move_player(playerData.homeport, dist, playerData.money, playerData)
+
+                # Refill inventory -> faija tuo töistä kokista
+                colaAmount = random.randint(200,500)
+                addCola(playerData, colaAmount)
+                print("Faija toi sinulle töistä kolaa", colaAmount)
 
 
                 printUserStats(playerData.username)
