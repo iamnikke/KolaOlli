@@ -4,11 +4,17 @@ from gameInit import *
 from functions import *
 from printSelectCountryHud import *
 from add_cola import *
+from Setup_database_script import *
 
 #
 # Pääohjelma
 #
 #
+
+try:
+    queryDb("SELECT 1")
+except:
+    setup_database()
 
 # Alkutekstit
 ## r-string estää tulkitsemasta erikoismerkkejä

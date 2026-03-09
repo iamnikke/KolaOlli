@@ -147,11 +147,7 @@ def add_money(playerData, priceAmount):
     ## [0][0] = ensimmäinen rivi, ensimmäinen sarake
     moneyBalance = queryDb(f"SELECT money FROM user_info WHERE id = '{playerId}'")[0][0]
 
-    priceAmount = Decimal(str(priceAmount))
-
-    if moneyBalance < priceAmount:
-        # Palauta false jos rahat eivät riitä maksuun
-        return False
+    priceAmount = Decimal(priceAmount)
 
     newBalance = moneyBalance + priceAmount
 
