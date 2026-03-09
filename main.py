@@ -5,6 +5,7 @@ from functions import *
 from printSelectCountryHud import *
 from add_cola import *
 from Setup_database_script import *
+from add_xp import *
 
 #
 # Pääohjelma
@@ -122,8 +123,11 @@ while True:
                 # OHJELMA JATKUU
                 loadValue = multiply_load(dist, load)
                 add_money(playerData, loadValue)
+                xpValue = int(dist / 10)
+                addXp(playerData, xpValue)
 
-                print("Tienasit ", loadValue)
+                print(f"Keräsit reissulta {xpValue} xp:tä.")
+                print(f"Tienasit  {int(loadValue)} euroa.")
                 print("DEBUG",playerData.location, "->", playerData.homeport )
                 input("Lennä takaisin kotiin painamalla Enter...")
                 dist = calculate_distance(playerData.location, playerData.homeport)
