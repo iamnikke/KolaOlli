@@ -11,9 +11,7 @@ from Setup_database_script import *
 #
 #
 
-
-if not queryDb("SELECT 1"):
-    setup_database()
+queryDb("SELECT 1")
 
 # Alkutekstit
 ## r-string estää tulkitsemasta erikoismerkkejä

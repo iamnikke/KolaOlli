@@ -1,4 +1,5 @@
 import mysql.connector
+from Setup_database_script import setup_database
 
 def queryDb(query):
 
@@ -12,6 +13,7 @@ def queryDb(query):
     )
     cursor = mysql_connection.cursor()
     cursor.execute(query)
+
     result = cursor.fetchall()
     mysql_connection.close()
     return result
