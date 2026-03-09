@@ -2,6 +2,7 @@ import random
 
 from gameInit import *
 from functions import *
+from printWelcomeHud import *
 
 #
 # Pääohjelma
@@ -37,6 +38,7 @@ playerData = auth(username)
 printUserStats(playerData.username)
 
 while True:
+
     printSelectCountryHud(playerData)
     targetCountry = input("Syötä maan tunnus: ")
 
@@ -61,7 +63,7 @@ while True:
             pick_airplane = int(input("\nValitse lentokone (1, 2, 3): ")) - 1
             if 0 <= pick_airplane < len(vehicles):
                 selected_vehicle = vehicles[pick_airplane]
-                print(f"Valitsit: {selected_vehicle.name}")
+                #print(f"Valitsit: {selected_vehicle.name}")
             else:
                 print("Virhe! Lentokonetta ei ole olemassa.")
                 continue  # menee takaisin main looppiin
@@ -70,100 +72,105 @@ while True:
             continue
 
         price = Decimal(prices[pick_airplane])
-        print(price)
+        #print(price)
 
-        input("Paina enter jatkaaksesi...")
+        # input("Paina enter jatkaaksesi...")
 
         currentco2 = calculate_effluent(dist)
         updatePassport = update_passport(playerData, playerData.location, targetCountry, currentco2)
         updateco2(playerData, currentco2)
 
-        print(f"Lentäminen {targetCountry} maksaa: {price}")
-        print(f"Matkaa on {dist:.2f} kilometriä.")
+        print(f"Lentäminen {targetCountry} maksaa: {price:.2f}")
+        print(f"Matkaa on {dist:.0f} kilometriä.")
         print("====================================")
 
-        load =  int(input("Kuinka monta tölkkiä colaa otat mukaan?"))
+        print("")
+        print(f"Sinulla on {playerData.coca_cola} coca-colaa.")
+        load =  int(input("Montako tölkkiä colaa otat mukaan myytäväksi? "))
 
-        confirm = input("Kirjoita lessgo matkustaaksesi: ")
-        if confirm == "lessgo":
-            if reduceMoney(playerData, price) and reduceCola(playerData, load):
-                print("Tervetuloa maahan.")
-                update_time(playerData.id, dist, selected_vehicle.speed)
-                print("Rahaa jäljellä", playerData.money)
-                move_player(targetCountry, dist, playerData.money, playerData)
-                capacity = selected_vehicle.capacity
+        #input("Paina Enter jatkaaksesi...")
 
-                if capacity < load:
-                    # Arpoo jääkö pelaaja kiinni tullissa
-                    if get_caught():
-                        # laskee sakon
-                        fines = calculate_fines(capacity, load)
-                        print(f"Jäit kiinni ylilastin kanssa, joudut maksamaan sakon: {fines} euroa")
+        if reduceMoney(playerData, price) and reduceCola(playerData, load):
+            update_time(playerData.id, dist, selected_vehicle.speed)
+            move_player(targetCountry, dist, playerData.money, playerData)
+            capacity = selected_vehicle.capacity
 
-                        # attempt bribe
-                        bribe = input("Lahjonta: yes / no: ")
-                        bribePrice = fines * 0.2
-                        print("Lahjonta maksaa", bribePrice)
+            if capacity < load:
+                # Arpoo jääkö pelaaja kiinni tullissa
+                if get_caught():
+                    # laskee sakon
+                    fines = calculate_fines(capacity, load)
+                    print(f"Jäit kiinni ylilastin kanssa, joudut maksamaan sakon: {fines} euroa")
 
-                        if bribe == "yes":
-                            # Yritä lahjoa -> vähennä lahjonnan hinta
-                            if reduceMoney(playerData, bribePrice):
-                                # Arvo suostuuko tullivirkailija lahjukseen, jos ei, eli jää kiinni niin sakko x 2
-                                if get_caught():
-                                    fines = fines * 2
-                                # Jos suostuu niin sakot nolla
-                                else:
-                                    fines = 0
-                            # Else jos rahat ei riitä lahjukseen
+                    # attempt bribe
+                    bribe = input("Lahjonta: yes / no: ")
+                    bribePrice = fines * 0.2
+                    print("Lahjonta maksaa", bribePrice)
+
+                    if bribe == "yes":
+                        # Yritä lahjoa -> vähennä lahjonnan hinta
+                        if reduceMoney(playerData, bribePrice):
+                            # Arvo suostuuko tullivirkailija lahjukseen, jos ei, eli jää kiinni niin sakko x 2
+                            if get_caught():
+                                fines = fines * 2
+                            # Jos suostuu niin sakot nolla
                             else:
-                                print("Rahat ei riitä lahjontaan")
-
-                        # Jos rahat riittää maksuun
-                        if reduceMoney(playerData, fines):
-                            print("Rahaa jäljellä", playerData.money)
-                        # rahat ei riitä sakkoon = Peli päättyy
+                                fines = 0
+                        # Else jos rahat ei riitä lahjukseen
                         else:
-                            gameover(playerData.id)
-                            break
-                            # game over-funktio
+                            print("Rahat ei riitä lahjontaan")
 
-                # OHJELMA JATKUU
-                loadValue = multiply_load(dist, load)
-                add_money(playerData, loadValue)
-                xpValue = int(dist / 10)
-                addXp(playerData, xpValue)
+                    # Jos rahat riittää maksuun
+                    if not reduceMoney(playerData, fines):
+                        gameover(playerData.id)
+                        break
+                        # game over-funktio
 
-                print("Keräsit XP", xpValue)
-                print("Tienasit ", loadValue)
-                print("DEBUG",playerData.location, "->", playerData.homeport )
-                input("Lennä takaisin kotiin painamalla Enter...")
-                dist = calculate_distance(playerData.location, playerData.homeport)
-                price = float(f"{calculate_fly_cost(dist):.2f}")
-                currentco2 = calculate_effluent(dist)
-                updatePassportAgain = update_passport(playerData, playerData.location, playerData.homeport, currentco2)
-                updateco2(playerData, currentco2)
-                update_time(playerData.id, dist, selected_vehicle.speed)
-                move_player(playerData.homeport, dist, playerData.money, playerData)
+            # OHJELMA JATKUU
+            loadValue = multiply_load(dist, load)
+            add_money(playerData, loadValue)
+            xpValue = int(dist / 10)
+            addXp(playerData, xpValue)
 
-                # Refill inventory -> faija tuo töistä kokista
-                colaAmount = random.randint(200,500)
-                addCola(playerData, colaAmount)
-                print("Faija toi sinulle töistä kolaa", colaAmount)
+            printWelcomeHud(xpValue, loadValue, playerData)
+            #print("Keräsit XP", xpValue)
+            #print("Tienasit ", loadValue)
+            #print("Rahaa jäljellä", playerData.money)
+
+            # print("DEBUG",playerData.location, "->", playerData.homeport )
+            input("Lennä takaisin kotiin painamalla Enter...")
+            dist = calculate_distance(playerData.location, playerData.homeport)
+            price = float(f"{calculate_fly_cost(dist):.2f}")
+            currentco2 = calculate_effluent(dist)
+            updatePassportAgain = update_passport(playerData, playerData.location, playerData.homeport, currentco2)
+            updateco2(playerData, currentco2)
+            update_time(playerData.id, dist, selected_vehicle.speed)
+            move_player(playerData.homeport, dist, playerData.money, playerData)
+
+            # Refill inventory -> faija tuo töistä kokista
+            colaAmount = random.randint(200,500)
+            addCola(playerData, colaAmount)
+
+            if playerData.xp >= 1000:
+                printWinner()
+                break
 
 
-                printUserStats(playerData.username)
+            printTripFinished(colaAmount)
+            #print("Faija toi sinulle töistä kolaa", colaAmount)
 
-            else:
-                print("Sinut käännytettiin kassalla kotiin. Rahat eivät riittäneet.")
-                print("Kokeile lentää lähemmäs. Sinulla on vain", playerData.money)
+
+            #printUserStats(playerData.username)
+
+            input("Paina Enter lähteäksesi lentokentälle...")
+
+        else:
+            print("Sinut käännytettiin kassalla kotiin. Rahat eivät riittäneet.")
+            print("Kokeile lentää lähemmäs. Sinulla on vain", playerData.money)
 
 
 
 """
-
-TESTIT TMS TÄN AlAPUOLELLE
-ÄLÄ PUSHAA MITÄÄN PÄÄOHJELMAAN
-
 
 YLEISPÄTEVÄ OHJE:
 jos haluat kokeilla funktiota oikeilla parametreillä, voit käyttää ylläolevan olioluokkaa

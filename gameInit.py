@@ -169,7 +169,7 @@ def printUserStats(username):
 
     # Tulosta pelaajan statsit
     playerStatsHud = f"""
-            👤 Käyttäjänimi: {playerData.username} | Taso: {playerData.xp} (ID: {playerData.id})
+            👤 Käyttäjänimi: {playerData.username} | Tasopisteet: {playerData.xp} (ID: {playerData.id})
             💰{playerData.money} | 🥤{playerData.coca_cola}
             🕙{playerData.clock} | 📍{playerData.location}
             
