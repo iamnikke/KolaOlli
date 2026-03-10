@@ -44,8 +44,8 @@ class Airplane:
 #tähän voidaan vaihtaa lentokoneiden statseja
 def init_vehicles():
     small_airplane = Airplane("pieni lentokone", 1000, 50)
-    medium_airplane = Airplane("keskikokoinen lentokone", 1500, 500)
-    big_airplane = Airplane("iso lentokone", 2000, 2000)
+    medium_airplane = Airplane("keskikokoinen lentokone", 1500, 100)
+    big_airplane = Airplane("iso lentokone", 2000, 300)
 
     # Palautetaan lista kulkuneuvo-olioista
     return [small_airplane, medium_airplane, big_airplane]
